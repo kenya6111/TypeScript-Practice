@@ -209,3 +209,32 @@ console.log({ isFinished });
 ```
 
 しっかりわかってないけど、とりあえずそのファイルに export{}と書いておくと、モジュールとしてそのファイルが認識され、そのファイル内の変数はグローバル空間に宣言されないらしい。個別のロッカーに宣言されるイメージ。export がないと公のば（グローバル）に宣言され、再度コンパイル時にすでに宣言してるって怒られる？？みたいな感じらしい。よくわからん。
+
+### tuple
+
+要素の型が明確にわかっている型
+
+普通に以下で宣言すると、let profile: (string | number)[]の方で宣言される
+
+```ts
+let profile = ['ham', 43]; //let profile: (string | number)[]
+profile = [111, 'ham'];
+```
+
+以下も同じユニオン型。またはのやつ。
+
+```ts
+let uniontest: string | number = 'ssss';
+uniontest = 1000;
+
+console.log(uniontest);
+```
+
+でもこれは上記に書いた通りデータに順序は制限しないものになる。
+
+タプルはこれに順序を課したものになる。
+以下のように書く
+
+```ts
+let profile2: [string, number] = ['aaa', 22];
+```
