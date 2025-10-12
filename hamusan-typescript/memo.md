@@ -74,7 +74,7 @@ k_tanaka@Mac hamusan-typescript % ./node_modules/.bin/tsc src/install-typescript
 
 ### npx コマンド
 
-上記のような開発環境用の ts のようなプロジェクト用のものを node-modules は以下のディレクトリを探索して実行してくれる超絶便利なコマンド
+上記のような開発環境用の ts のようなプロジェクト用のものを node-modules 配下のディレクトリを探索して実行してくれる超絶便利なコマンド
 
 ```bash
 k_tanaka@Mac hamusan-typescript % npx tsc src/install-typescript.ts
@@ -110,4 +110,62 @@ k_tanaka@Mac hamusan-typescript % ts-node src/install-typescript.ts
 { message: 'hello typescript' }
 k_tanaka@Mac hamusan-typescript % where ts-node
 /usr/local/bin/ts-node
+```
+
+### ts-node-dev
+
+ここまでで結構便利にはなったが、まだ不便。なぜなら ts ファイルを変更するたびに毎回毎回、ts-node コマンド打って実行！ってしなきゃいけない。面倒すぎ。
+
+というわけで ts-node-dev の出番。これは ts ファイルが修正されるたびに毎回毎回コンパイルと実行をやってくれる
+
+```bash
+k_tanaka@Mac hamusan-typescript % npx ts-node-dev --respawn src/install-typescript.ts
+[INFO] 22:31:29 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 4.9.3)
+{ message: 'hello ts-node!' }
+[INFO] 22:31:36 Restarting: /Users/k_tanaka/Repository/TypeScript-Practice/hamusan-typescript/src/install-typescript.ts has been modified
+{ message: 'hello ts-node!!' }
+[INFO] 22:31:38 Restarting: /Users/k_tanaka/Repository/TypeScript-Practice/hamusan-typescript/src/install-typescript.ts has been modified
+{ message: 'hello ts-node!!' }
+```
+
+### package.json にタスクの登録
+
+- 毎回 npx run dev src/install-typescript.ts ~~って打つのだるいので
+  package.json にタスクとして特定のコマンドをまとめたやつをエイリアス的な感じで設定できる
+
+今回は "dev":"ts-node-dev --respawn"で登録した。
+
+今後は npm run dev hoge.ts で Air のような修正後即実行の環境が手に入った。
+
+```json
+{
+  "name": "hamusan-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.3"
+  }
+}
+```
+
+```bash
+k_tanaka@Mac hamusan-typescript % npm run dev src/install-typescript.ts
+
+> hamusan-typescript@1.0.0 dev
+> ts-node-dev --respawn src/install-typescript.ts
+
+[INFO] 22:40:07 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 4.9.3)
+{ message: 'hello ts-node!!' }
+[INFO] 22:40:15 Restarting: /Users/k_tanaka/Repository/TypeScript-Practice/hamusan-typescript/src/install-typescript.ts has been modified
+{ message: 'hello ts-node!!!!' }
 ```
