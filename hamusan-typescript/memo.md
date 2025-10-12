@@ -90,3 +90,24 @@ node hoge.js 　で js を実行できる
 k_tanaka@Mac hamusan-typescript % node src/install-typescript.js
 { message: 'hello typescript' }
 ```
+
+### ts-node
+
+より高速に typescript のコードを実行できるスゴスゴコマンド
+
+tsc コマンドで ts をコンパイルして、コンパイルして生成した js を node で実行するまで
+という一連の作業をコマンド一発で実行できるヤバイコマンド。
+
+```bash
+k_tanaka@Mac hamusan-typescript % npx ts-node src/install-typescript.ts
+{ message: 'hello typescript' }
+```
+
+ちなみにすでに global と開発環境の両方にインストール済みだったので以下でもいける
+
+```bash
+k_tanaka@Mac hamusan-typescript % ts-node src/install-typescript.ts
+{ message: 'hello typescript' }
+k_tanaka@Mac hamusan-typescript % where ts-node
+/usr/local/bin/ts-node
+```
