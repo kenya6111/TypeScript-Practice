@@ -169,3 +169,43 @@ k_tanaka@Mac hamusan-typescript % npm run dev src/install-typescript.ts
 [INFO] 22:40:15 Restarting: /Users/k_tanaka/Repository/TypeScript-Practice/hamusan-typescript/src/install-typescript.ts has been modified
 { message: 'hello ts-node!!!!' }
 ```
+
+### tsconfig.json
+
+以下のコマンドで生成できる
+
+```bash
+npx tsc --init
+```
+
+### boolean 型
+
+「:データ型」の部分を型注釈とか、型アノテーションとか、アノテーションとか呼ぶ
+この変数はこのような型で使うからよろしくね！と呼びかけているってことでアノテーションという。
+annotation はラテン語 annotāre（メモを書く）の系統で、
+「本体に付ける説明メモ」 という意味。
+プログラミングでは「コード要素に付ける補足情報（メタデータ）」を指し、
+型注釈は「この変数/式はこういう型だよ」という説明メモです
+
+TypeScript や Haskell/ML 系のように型推論がある言語では、型は多くの場合書かなくても推論されます。
+そこに明示で型を書き添えるので「宣言（必須）」というより**注釈（オプションのメモ）**のニュアンス。
+さらに TS では型は実行時に消える（型消去）ので、振る舞いを変える命令ではなく静的解析のための情報＝「注釈」
+
+```ts
+let isFinished: boolean = true;
+```
+
+### Cannot redeclare block-scoped variable 'name'.ts(2451)
+
+以下の ts ファイルをコンパイルすると、name 変数部分で出るエラー。
+
+```ts
+//export {};
+
+let name = 'TypeScript';
+
+let isFinished: boolean = true;
+console.log({ isFinished });
+```
+
+しっかりわかってないけど、とりあえずそのファイルに export{}と書いておくと、モジュールとしてそのファイルが認識され、そのファイル内の変数はグローバル空間に宣言されないらしい。個別のロッカーに宣言されるイメージ。export がないと公のば（グローバル）に宣言され、再度コンパイル時にすでに宣言してるって怒られる？？みたいな感じらしい。よくわからん。
