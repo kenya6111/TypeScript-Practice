@@ -238,3 +238,5 @@ console.log(uniontest);
 ```ts
 let profile2: [string, number] = ['aaa', 22];
 ```
+
+### any 型
