@@ -1,4 +1,5 @@
 // 既存の方を生かしつつ新たな型を作るやつ
+// intersection型。交差型
 export {};
 
 type Pitcher1 = {
